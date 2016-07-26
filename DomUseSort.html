@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title>
+			
+		</title>	
+		
+		
+	</head>
+	
+	<body>
+		<ul id="ul">
+			<li>1</li>
+			<li>2</li>
+			<li>4</li>
+			<li>3</li>
+		</ul>
+		<button value="button" text="排序" id='sort' />
+	</body>
+	
+	<script type="text/javascript">
+		var ul=document.getElementsByTagName("li");
+		var nArr=Array.prototype.slice.call(ul,0);
+		// var nnn=Array.prototype.sort.call(nArr,function(a,b){
+		// 		return a.innerHTML-b.innerHTML;
+		// })
+		var nn2=nArr.sort(function(a,b){
+				return a.innerHTML-b.innerHTML;
+		})
+
+		document.getElementById("sort").addEventListener("click",function(){
+			document.getElementById("ul").innerHTML = nnn;
+		},false)
+	</script>
+</html>

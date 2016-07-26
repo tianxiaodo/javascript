@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+        <style type="text/css">
+            html,body,div,p,h1,table,thead,tbody,tr,th,td{ margin: 0; padding: 0; font-family: "微软雅黑"; font-size: 12px;}
+            table{ margin: 30px auto; border: 1px solid red; }
+            table th{ width: 100px; height: 30px; cursor: pointer; text-align: center; }
+            table th:nth-child(1){ width: 30px;}
+            table td{width: 100px; height: 30px; text-align: center;}
+            table td:nth-child(1){ width: 30px;}
+        </style>
+        <script type="text/javascript" src="utils.js"></script>
+    </head>
+<body>
+    <table id="tab">
+        <thead>
+        <tr>
+            <th><input type="checkbox" name="checkNameAll"/></th>
+            <th name="zhufeng">学员编号</th>
+            <th name="zhufeng">学员姓名</th>
+            <th id="chinaScore">语文分数</th>
+            <th id="mathScore">数组分数</th>
+            <th id="englishScore">英语分数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="checkbox" name="checkName"/></td>
+            <td>1</th>
+            <td>赵一</th>
+            <td>98</th><td>90</th><td>66</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="checkName"/></td>
+            <td>2</th>
+            <td>钱二</th>
+            <td>43</th><td>54</th><td>32</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="checkName"/></td>
+            <td>3</th>
+            <td>孙三</th>
+            <td>21</th><td>52</th><td>39</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="checkName"/></td>
+            <td>4</th>
+            <td>李四</th>
+            <td>88</th><td>97</th><td>66</th>
+        </tr>
+        <tr>
+            <td><input type="checkbox" name="checkName"/></td>
+            <td>5</th>
+            <td>王五</th>
+            <td>76</th><td>87</th><td>43</th>
+        </tr>
+        </tbody>
+    </table>
+</body>
+    <script>
+        var tab=document.getElementById("tab");
+        var ths=document.getElementsByTagName("th");
+        var tb=tab.tBodies.item(0);
+        var nArr=Array.prototype.slice.call(tb.rows,0);
+        var sortT=0;
+        for(var i=0;i<ths.length;i++)
+        {
+            if(i!=0&&i!=2)
+            {
+                ths[i].onclick=(function(index){
+                        return function(){
+                            var narr2=nArr.sort(function(a,b){
+                                if(sortT==0)
+                                {return a.cells[index].innerHTML - b.cells[index].innerHTML;}
+                                else{return b.cells[index].innerHTML-a.cells[index].innerHTML;}
+
+                            });
+                            sortT==0?sortT=1:sortT=0;
+                            for(var ii=0;ii<narr2.length;ii++)
+                            {
+                                tb.appendChild(narr2[ii]);
+                            }
+                        }
+                })(i)
+            }
+        }
+        ths[0].firstChild.onclick=function(){
+            for(var i=0;i<tb.rows.length;i++)
+            {
+                tb.rows[i].cells[0].firstChild.checked=this.checked;
+            }
+        };
+        for(var iii=0;iii<tb.rows.length;iii++)
+        {
+            tb.rows[iii].cells[0].firstChild.onclick=function(){
+                var num=0;
+                for(var j=0;j<tb.rows.length;j++)
+                {
+                    if(tb.rows[j].cells[0].firstChild.checked==this.checked==true)
+                    num++;
+                    else
+                        break;
+                }
+                ths[0].firstChild.checked=num==tb.rows.length?true:false;
+            }
+        }
+
+
+
+
+    </script>
+</html>

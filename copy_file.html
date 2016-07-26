@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>drag</title>
+    
+</head>
+    <style>
+        body,html{margin:0;padding:0;width:100%;height:100%}
+        #wrapper{width:100%;height: 200px;}
+    </style>
+<body>
+    <div id="wrapper" ondrop="drop(event)"  ondragover="allowDrop(event)"></div>
+    <input type="text" onpaste="paste(event)">
+</body>
+<script type="text/javascript">
+       function allowDrop(ev)
+        {
+            ev.preventDefault();
+        }
+
+        function drag(ev)
+        {
+            ev.dataTransfer.setData("Text",ev.target.id);
+        }
+
+        function paste(e){
+            e.preventDefault();
+            var cd=e.clipboardData;
+            var gd=cd.getData;
+            console.log(gd);
+            var data=cd.getData("Base64");
+            var text=cd.getData("Text");
+            var img=cd.getData("Image");
+            var i=cd.items[0];
+            console.log(data);
+        }
+
+        function drop(ev)
+        {
+            ev.preventDefault();
+            console.log(ev.dataTransfer.files);
+            //var data=ev.dataTransfer.getData("Text");
+            //data=ev.dataTransfer.getData("base64");
+            //ev.target.appendChild(document.getElementById(data));
+            //console.log(data);
+        }
+</script>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Error</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+<script type="text/javascript" src="event.js"></script>
+</head>
+<body>
+	<div id="div1" style="width:100px;height:100px;">
+		click me
+	</div>
+</body>
+<script type="text/javascript">
+	var div1=document.getElementById("div1");
+		Event.on(div1,"click",function(){
+		alert("click");
+	});
+</script>
+</html>

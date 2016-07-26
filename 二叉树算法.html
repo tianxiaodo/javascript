@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+<script>
+	function node(data){
+		this.value=null;
+		if(data){
+			this.value=data;
+		}
+		this.left=null;
+		this.right=null;
+	}
+    // function node(){
+    //     var body = docu
+    // }
+	node.prototype.add=function(val){
+		if(!val){
+			return;
+		}
+		if(this.value==null){
+			this.value=val;
+			return;
+		}
+
+		var nNode=new node(val);
+
+		if(val>=this.value){
+			if(this.right){
+				this.right.add(val);	
+			}
+			else{
+				this.right=nNode;
+			}
+		}
+		else{
+			if(this.left){
+				this.left.add(nNode);
+			}
+			else{
+				this.left=nNode;	
+			}
+		}
+	}
+
+	var arr=[6,3,5,2,57,2,6432,7];
+	var nodeObj=new node();
+	for(var i=0;i<arr.length;i++){
+		nodeObj.add(arr[i]);
+	}
+
+	console.log(nodeObj);
+</script>
+</html>

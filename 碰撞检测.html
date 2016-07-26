@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        img{border: none;display: block;width:150px;height:150px;}
+
+        ul{background-color: #3ff;position:relative;display: block;width:480px;height:640px;margin:10px auto;padding:0;}
+        li{ width: 150px;height:150px;overflow:hidden;margin:5px;float: left;background-color: chartreuse;
+            -webkit-user-select: none;-moz-user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><img src="img/1.png" /></li>
+        <li><img src="img/2.png" /></li>
+        <li><img src="img/3.png" /></li>
+        <li><img src="img/4.png" /></li>
+        <li><img src="img/5.png" /></li>
+        <li><img src="img/6.png" /></li>
+        <li><img src="img/7.png" /></li>
+        <li><img src="img/8.png" /></li>
+        <li><img src="img/9.png" /></li>
+        <li><img src="img/10.png" /></li>
+        <li><img src="img/11.png" /></li>
+        <li><img src="img/12.png" /></li>
+    </ul>
+</body>
+<script src="JS/event.js"></script>
+<script src="JS/drag.js"></script>
+<script src="JS/tween.js"></script>
+<script>
+    var oLis=document.getElementsByTagName("li");
+    for(var i=0;i<oLis.length;i++)
+    {
+        var oLi=oLis.item(i);
+        oLi.style.left=(oLi.l=oLi.offsetLeft)+"px";
+        oLi.style.top=(oLi.t=oLi.offsetTop)+"px";
+
+    }
+    for(var i=0;i<oLis.length;i++)
+    {
+        var oLi=oLis.item(i);
+        oLi.style.position="absolute";
+        oLi.style.margin=0;
+        on(oLi,"mousedown",down);
+        on(oLi,"selfDragStart",increaseIndex);
+        on(oLi,"selfDragEnd",function(){
+            animate(this,{left:this.l,top:this.t},600,4);
+        });
+        on(oLi,"selfDragging",getHitedEle);
+        on(oLi,"selfDragEnd",getShortestEle);
+    }
+    var zIndex=1;
+    function increaseIndex()
+    {
+        this.style.zIndex=++zIndex;
+    }
+
+
+    function hitedTest(r,b)
+    {
+        if(b.offsetLeft+ b.offsetWidth< r.offsetLeft|| b.offsetLeft> r.offsetWidth+ r.offsetLeft||
+           b.offsetTop+ b.offsetHeight< r.offsetTop||b.offsetTop> r.offsetTop+ r.offsetHeight)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    function getHitedEle(){
+        this["aHitedEles"]=[];
+        for(var i=0;i<oLis.length;i++)
+        {
+            var oLi=oLis.item(i);
+            if(oLi==this){
+                continue;
+            }
+            oLi.style.background="";
+            if(hitedTest(this,oLi))
+            {
+                oLi.style.backgroundColor="purple";
+                this["aHitedEles"].push(oLi);
+            }
+        }
+    }
+    function getShortestEle(){    // 计算出碰撞的元素中，距离最短的那个
+        var a=this["aHitedEles"];
+        if(a)
+        {
+            for(var i=0;i< a.length;i++)
+            {
+               a[i].distance= Math.pow(this.offsetLeft-a[i].offsetLeft,2)+Math.pow(this.offsetTop-a[i.offsetTop],2);
+
+            }
+            a.sort(function(a,b){
+                return a.distance- b.distance;
+            });
+            if(a[0]){
+                var shortestEle=a[0];
+                animate(this,{left:shortestEle.l,top:shortestEle.t},600,4);
+                animate(shortestEle,{left:this.l,top:this.t},600,4);
+                var objTemp={};
+                objTemp.l=this.l;
+                objTemp.t=this.t;
+                this.l=shortestEle.l;
+                this.t=shortestEle.t;
+                shortestEle.l=objTemp.l;
+                shortestEle.t=objTemp.t;
+            }
+        }
+    }
+</script>
+</html>

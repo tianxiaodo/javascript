@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #div1{width:100px;height:100px;position: absolute;background-color: aqua;cursor: pointer;line-height: 100px;text-align: center; }
+        #div2{width:150px;height:150px;position:absolute;left:500px;top:200px;}
+        #div2 div{width:50px;position:absolute;font-size:15px;height:50px;line-height:50px;text-align:center;cursor: pointer;background-color: antiquewhite;}
+    </style>
+</head>
+<body>
+    <div id="div1" style="left:10px;top: 100px;">
+        杀死箭头
+    </div>
+<div id="div2">
+    <div onclick="begin('top',colorBack)" style="left:50px;top:0;">↑</div>
+    <div onclick="begin('bottom',colorBack)" style="left:50px;top:100px;">↓</div>
+    <div onclick="begin('left',colorBack)" style="left:0px;top:50px;">←</div>
+    <div onclick="begin('right',colorBack)" style="left:100px;top:50px;">→</div>
+</div>
+</body>
+<script type="text/javascript" charset="utf-8">
+    var timer = null;
+    var oDiv = document.getElementById("div1");
+    function begin(direction,fn) {
+        oDiv.style.backgroundColor="red";
+        var activeWidth =document.documentElement.clientWidth- oDiv.offsetWidth;
+        var activeHeight =document.documentElement.clientHeight- oDiv.offsetHeight;
+        var l = oDiv.offsetLeft;
+        clearTimeout(timer);
+
+        var i=1;
+        if(direction=='left'||direction=='top')
+             i=-1;
+        var active=0;
+        if(direction=='right')
+            active=activeWidth;
+        else if(direction=='bottom')
+            active=activeHeight;
+        if(direction=="left"||direction=="right")
+            direction="left";
+        else
+            direction="top";
+        function move() {
+            var ol = parseInt(oDiv.style[direction] || 0);
+            if (ol != active) {
+                oDiv.style[direction] = (ol + i) + "px";
+                timer = window.setTimeout(move, 10);
+            }
+            else {
+               if(typeof  fn=="function")
+               fn();
+            }
+        }
+        move();
+    }
+    oDiv.onclick=function(){
+        window.clearTimeout(timer);
+        colorBack();
+    };
+    function colorBack()
+    {
+        oDiv.style.backgroundColor="aqua";
+    }
+</script>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        var str="zhu feng pei xun";
+        //统计出现的" "次数 并 将空格替换为‘空格’
+        var i=0;
+        var rs=str.replace(/\s+/g,function(a,b,c){
+            //默认的3个参数
+            //a:捕获的内容
+            //b:起始位置
+            //c:原有字符串
+            i++;
+            return "空格";
+        });
+        console.log(rs);
+
+        var str2="8872840";
+        var ary=["零","壹","贰","叁","肆","伍","陆","柒","捌","玖"];
+
+        var rs2=str2.replace(/\d/g,function(a,b,c){
+            return ary[a];
+        });
+        console.log(rs2);
+
+
+
+        var str3="My name is{0}.I am{1} years old.I am in class{2} grade{3}.";
+        var reg=/{(\d)}/g;
+        console.log(reg.exec(str));
+        var ary3=["珠峰培训",39,4,6];
+        var rs3=str3.replace(reg,function(){
+            //如果正则中有分组的话。我们由四个参数
+            //1、大正则捕获的内容 arguments[0]
+            //2、小正则捕获的内容
+            //3、大正则找到的起始位置
+            //4、原有字符串
+            //console.log(arguments[0]);
+            //console.log(arguments[1]); ==>
+            //console.log(RegExp.$1); 第一个分组捕获的内容
+
+            return " "+ary3[RegExp.$1];
+
+        });
+        console.log(rs3);
+
+
+        var obj={};
+        var url="http://sports.qq.com/kbsweb/basket.htm?matchId=1460585&competitionId=100000";
+        var reg4=/([^?=&]+)=([^?=&]+)/g;
+        while(reg4.test(url)){
+            obj[RegExp.$1]=RegExp.$2;
+        }
+        console.log(obj);
+        console.log(obj.matchId);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
